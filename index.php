@@ -9,8 +9,6 @@ if(isset($_SESSION['user-id'])) {
 	exit;
 } else if (isset($_POST['email'])) {
 	if(authenticate($_POST['email'], $_POST['password']) != null) {
-		$user = current_user();
-		$_SESSION['user-id'] = $user['id'];
 		header('location: logboek.php');
 		exit;
 	} else {

@@ -39,7 +39,11 @@ function authenticate($email, $password) {
 	);
 	if ($user === null) return null;
 
-	if ($bcrypt->verify($password, $user['password'])) return $user;
+	if ($bcrypt->verify($password, $user['password'])) 
+	{
+		$_SESSION['user-id'] = $user['id'];
+		return $user;
+	}
 	return null;
 }
 
