@@ -4,7 +4,7 @@ if (session_id() == '') session_start();
 
 require_once(dirname(__file__) . '/db.php');
 require_once(dirname(__file__) . '/bcrypt.php');
-
+$bcrypt = new Bcrypt(12);
 function create_user($name, $email, $password) {
 	global $db;
 	global $bcrypt;
