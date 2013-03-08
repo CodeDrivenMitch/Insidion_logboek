@@ -10,7 +10,8 @@
 </head>
 <body>
 
-
+<h1>Logboek</h1>
+<a href='logout.php'>Click here to log out</a><br/>
 
 <?php
 
