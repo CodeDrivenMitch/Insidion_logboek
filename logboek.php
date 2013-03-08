@@ -100,7 +100,19 @@ function insertEntry()
 {
 	global $db;
 	global $user_info;
+	if($_POST['desc'] == '')
+	{
+		echo "You didn't enter a description!";
+		return;
+	}
+	if(strlen($_POST['desc']) < 8) {
+		echo "the description of the entry was too short, please make it longer than 8 characters!";
+	}
 	$time = intval($_POST['time']);
+	if($time == 0) {
+		echo "The time you entered wasn't correct! please enter a valid number, like '18'!";
+		return;
+	}
 	$db->query("INSERT INTO entries (`date`, entry, time, uid) VALUES (NOW(), :post, :time, :uid)", array(':post' => $_POST['desc'], 
 																										':time' => $time, 
 																										':uid' => $user_info['id']));
