@@ -1,7 +1,7 @@
 <html>
 <head>
 	<title>Logboek D.M.C</title>
-	<link href='main.css' rel='stylesheet'>
+	<link href='css/main.css' rel='stylesheet'>
 </head>
 <body>
 
@@ -12,7 +12,7 @@
 
 session_start();
 
-require 'user.php';
+require_once(dirname(__file__) . '/lib/user.php');
 
 
 if(!isset($_SESSION['user-id'])) {

@@ -1,8 +1,14 @@
+<html>
+<head>
+	<title>Logboek D.M.C</title>
+</head>
+<body>
+
 <?php
 
 session_start();
 
-require 'user.php';
+require_once(dirname(__file__) . '/lib/user.php');
 
 if(isset($_SESSION['user-id'])) {
 	header('location: logboek.php');
@@ -34,3 +40,5 @@ function showLoginForm()
 	<?php
 }
 ?>
+</body>
+</html>

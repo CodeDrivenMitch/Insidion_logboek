@@ -1,6 +1,12 @@
+<html>
+<head>
+	<title>Logboek D.M.C</title>
+</head>
+<body>
+
 <?php
 session_start();
-require 'user.php';
+require_once(dirname(__file__) .  '/lib/user.php');
 
 if(isset($_POST['email'])) {
 	if($_POST['passphrase'] != 'koekjes') 
@@ -38,3 +44,5 @@ function showRegisterForm()
 }
 
 ?>
+</body>
+</html>
