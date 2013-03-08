@@ -1,0 +1,38 @@
+table, th, td {
+		border : 1px solid black;
+		text-align: left;
+	}
+	body {
+		text-align:center;
+	}
+	table {
+		margin: 0 auto;
+	}
+	#logoutdiv , #logoutdiv a{
+		position: absolute;
+		margin: 0;
+		right: 0px;
+		top: 0px;
+		width: 150px;
+		height: 30px;
+		text-decoration: none;
+		color: red;
+		background: yellow;
+	}
+	#logoutdiv {
+		border: 2px solid black;
+	}
+	#errdiv {
+		width: 400px;
+		margin: 0 auto;
+		border: 2px solid black;
+		background: red;
+		color: black;
+	}
+	#notdiv {
+		width: 400px;
+		margin: 0 auto;
+		border: 2px solid black;
+		background: green;
+		color: black;
+	}

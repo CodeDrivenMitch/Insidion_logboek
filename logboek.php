@@ -1,17 +1,12 @@
 <html>
 <head>
-	<title>Logboek</title>
-	<style>
-	table, th, td {
-		border : 1px solid black;
-		text-align: left;
-	}
-	</style>
+	<title>Logboek D.M.C</title>
+	<link href='main.css' rel='stylesheet'>
 </head>
 <body>
 
-<h1>Logboek</h1>
-<a href='logout.php'>Click here to log out</a><br/>
+<h1>Logboek D.M.C</h1>
+<div id='logoutdiv'><a href='logout.php'>Click here to log out</a></div>
 
 <?php
 
@@ -36,11 +31,11 @@ if(isset($_POST['desc'])) {
 	insertEntry();
 }
 
-echo '<br/>Add logbook entry:<br/>';
+echo '<h2>Add logbook entry:</h2>';
 showEntryForm();
-echo '<br/>Logbook entries:<br/>';
+echo '<h2>Logbook entries:</h2>';
 showLogboek();
-echo '<br/>Total time per user: <br/>';
+echo '<h2>Total time per user: </h2>';
 showUserTotals();
 
 function showEntryForm()
@@ -102,21 +97,22 @@ function insertEntry()
 	global $user_info;
 	if($_POST['desc'] == '')
 	{
-		echo "You didn't enter a description!";
+		echo "<div id='errdiv'>You didn't enter a description!</div>";
 		return;
 	}
 	if(strlen($_POST['desc']) < 8) {
-		echo "the description of the entry was too short, please make it longer than 8 characters!";
+		echo "<div id='errdiv'>The description of the entry was too short, please make it longer than 8 characters!</div>";
+		return;
 	}
 	$time = intval($_POST['time']);
 	if($time == 0) {
-		echo "The time you entered wasn't correct! please enter a valid number, like '18'!";
+		echo "<div id='errdiv'>The time you entered wasn't correct! please enter a valid number, like '18'!</div>";
 		return;
 	}
 	$db->query("INSERT INTO entries (`date`, entry, time, uid) VALUES (NOW(), :post, :time, :uid)", array(':post' => $_POST['desc'], 
 																										':time' => $time, 
 																										':uid' => $user_info['id']));
-	echo "<b>Entry succesfully added<br/>";
+	echo "<div id='notdiv'>Entry succesfully added</div>";
 }
 function deleteEntry()
 {
@@ -124,13 +120,16 @@ function deleteEntry()
 	$eid = $_GET['e'];
 	global $db, $user_info;
 	$entry = $db->query_one("SELECT * FROM entries WHERE id=:eid", array(':eid' => $eid));
-
+	if($entry == null) {
+		echo "<div id='errdiv'>The entry you specified was not found!</div>";
+		return;
+	}
 	if($entry['uid'] == 1 || $entry['uid'] == $user_info['id'])
 	{
 		$db->query("DELETE FROM entries WHERE id=:eid", array(':eid' => $eid));
-		echo "Entry succesfully deleted! <br/>";
+		echo "<div id='notdiv'>Entry succesfully deleted! </div>";
 	} else {
-		echo "You can only delete your own entries!";
+		echo "<div id='errdiv'>You can only delete your own entries!</div>";
 	}
 }
 ?>
