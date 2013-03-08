@@ -24,6 +24,10 @@ if(!isset($_SESSION['user-id'])) {
 	header('location: index.php');
 	exit;
 }
+if(isset($_GET['e']))
+{
+	deleteEntry();
+}
 
 $user_info = current_user();
 
@@ -62,10 +66,10 @@ function showEntryForm()
 function showLogboek() 
 {
 	global $db, $user_info;
-	echo "<table><tr><th width='150px'>Wie:</th><th width='750px'>Wat:</th><th>tijd(in min)</th>";
+	echo "<table><tr><th width='150px'>Wie:</th><th width='750px'>Wat:</th><th>tijd(in min)</th><th>Delete:</th>";
 	$entries = $db->query("SELECT * FROM entries LIMIT 100", array());
 	foreach($entries as $e) {
-		echo "<tr><td>".$user_info['name']."</td><td>".$e['entry']."</td><td>".$e['time']."</td></tr>";
+		echo "<tr><td>".$user_info['name']."</td><td>".$e['entry']."</td><td>".$e['time']."</td><td><a href='logboek.php?e=".$e['id']."'>delete</a></td></tr>";
 	}
 	echo "</table>";
 }
@@ -74,7 +78,11 @@ function showUserTotals()
 {
 	global $db;
 	$result = $db->query("SELECT * FROM users", array());
-	if(count($result) == 0) return;
+	if(count($result) == 0 || $result == null) 
+		{
+
+			return;
+		}
 	echo "<table> <tr> <th> Users </th><th>Total time:</th></tr>";
 	foreach( $result as $u)
 	{
@@ -97,6 +105,21 @@ function insertEntry()
 																										':time' => $time, 
 																										':uid' => $user_info['id']));
 	echo "<b>Entry succesfully added<br/>";
+}
+function deleteEntry()
+{
+	//we only want people to be capable of removing them if it is one of theirs or the user id is one (thats me)
+	$eid = $_GET['e'];
+	global $db, $user_info;
+	$entry = $db->query_one("SELECT * FROM entries WHERE id=:eid", array(':eid' => $eid));
+
+	if($entry['uid'] == 1 || $entry['uid'] == $user_info['id'])
+	{
+		$db->query("DELETE FROM entries WHERE id=:eid", array(':eid' => $eid));
+		echo "Entry succesfully deleted! <br/>";
+	} else {
+		echo "You can only delete your own entries!";
+	}
 }
 ?>
 
