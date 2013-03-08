@@ -46,7 +46,7 @@ showUserTotals();
 function showEntryForm()
 {
 	?>
-	<form method='POST'>
+	<form method='POST' action="logboek.php">
 		<table>
 			<tr>
 				<th style='width:400px'>Description:</th>
