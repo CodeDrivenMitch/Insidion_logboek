@@ -3,6 +3,11 @@ session_start();
 require 'user.php';
 
 if(isset($_POST['email'])) {
+	if($_POST['passphrase'] != 'koekjes') 
+	{
+		echo "The passphrase you entered was incorrect. Please contact the administrator";
+		exit;
+	}
 	if(create_user($_POST['name'], $_POST['email'], $_POST['password']))
 	{
 		authenticate($_POST['email'], $_POST['password']);
@@ -24,6 +29,9 @@ function showRegisterForm()
 		<input type='text' name='email' id='email'><br/>
 		<label for='password'> Wachtwoord: </label>
 		<input type='password' name='password' id='password'><br/>
+		<label for='passphrase'>Passphrase:</label>
+		<input type='text' name='passphrase' id='passphrase'><br/>
+		Note: you got the passphrase for joining from your admin!<br/>
 		<input type='submit'>Register!</submit>
 	</form>
 	<?php
